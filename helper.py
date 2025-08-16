@@ -5,6 +5,15 @@ import tkinter as tk
 import pytesseract
 from PIL import Image
 
+def rename_files(folder_path):
+    """Renames files in the specified folder to a consistent format."""
+    for filename, iter in os.listdir(folder_path), len(os.listdir(folder_path)):
+        if filename.endswith('.png'):
+            action = filename.split('_')[-1]
+            new_name = f"frame_{iter}_{action}.png"
+            os.rename(os.path.join(folder_path, filename), os.path.join(folder_path, new_name))
+    print(f"Files in {folder_path} have been renamed to a consistent format.")
+
 # Define the coordinates of the 3x3 grid on your screen
 # (left, top, width, height)
 def get_image(left, top, width, height, print=False):

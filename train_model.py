@@ -3,10 +3,11 @@ import cv2
 import numpy as np
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
-# --- Missing Keras/TensorFlow Imports ---
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.models import load_model
+from tensorflow.keras.layers import Dropout
 # ----------------------------------------
 
 # --- 1. Load and Preprocess Data ---
@@ -78,10 +79,14 @@ model.compile(optimizer='adam',
 model.summary()
 
 # --- 3. Train the Model ---
-print("\nTraining model...")
-model.fit(X_train, y_train, epochs=10, validation_data=(X_test, y_test))
+print("Training the model...")
+model.fit(X_train, y_train, epochs=70, validation_data=(X_test, y_test))
 
-# --- 4. Save the Trained Model ---
-# Using the recommended Keras format instead of the legacy .h5
-model.save("game_agent_model.keras") 
-print("\nModel saved as game_agent_model.keras")
+# --- 4. Save the Model ---
+MODEL_PATH = "game_agent_model.keras"
+model.save(MODEL_PATH)
+print(f"Model saved to {MODEL_PATH}")
+
+# Optionally evaluate the model
+loss, accuracy = model.evaluate(X_test, y_test)
+print(f"Test Loss: {loss:.4f}, Test Accuracy: {accuracy:.4f}")
