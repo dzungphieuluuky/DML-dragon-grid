@@ -37,7 +37,7 @@ time.sleep(3)
 
 file_index = 0
 collecting = True
-
+print("Ready to collect data")
 with mss.mss() as sct:
     while collecting:
         # 1. Capture the screen

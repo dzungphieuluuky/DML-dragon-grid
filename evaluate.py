@@ -15,7 +15,7 @@ if __name__ == "__main__":
     X, y = load_data()
 
     # --- 2. Load the existing model ---
-    MODEL_PATH = input("Enter the path to save the model (default: game_agent_model.keras): ") or "game_agent_model.keras"
+    MODEL_PATH = input("Enter the path to load available model (default: game_agent_model.keras): ") or "game_agent_model.keras"
     print("Loading existing model...")
     model = load_model(MODEL_PATH)
     print("Model loaded successfully.")

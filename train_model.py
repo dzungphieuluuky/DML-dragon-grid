@@ -1,9 +1,9 @@
 import os
+
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from keras.models import load_model
-
 from data_process import load_data
 from __init__ import IMG_WIDTH, IMG_HEIGHT, ACTIONS
 # ----------------------------------------

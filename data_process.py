@@ -67,3 +67,20 @@ def load_data():
     y = data['y']
     print(f"Loaded data with shapes: X={X.shape}, y={y.shape}")
     return X, y
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Process or load Dragon Grid game data.")
+    parser.add_argument(
+        "--mode",
+        choices=["save", "load"],
+        required=True,
+        help="Choose 'save' to process and save data, or 'load' to load preprocessed data."
+    )
+    args = parser.parse_args()
+
+    if args.mode == "save":
+        save_data()
+    elif args.mode == "load":
+        load_data()

@@ -2,9 +2,10 @@ import mss
 import cv2
 import numpy as np
 import pyautogui
-from tensorflow.keras.models import load_model # type: ignore
 import time
 import keyboard
+
+from keras.models import load_model
 
 # --- Configuration ---
 MODEL_PATH = "game_agent_model.keras"
@@ -21,7 +22,7 @@ if __name__ == "__main__":
 
         # --- Load the Model ---
     model = load_model(MODEL_PATH)
-    print("Model loaded. Agent is ready.")
+    print(f"Model loaded from {MODEL_PATH}. Agent is ready.")
 
     print("Press 's' to start the agent.")
     print("Press 'q' to quit.")
