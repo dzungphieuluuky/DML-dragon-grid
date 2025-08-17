@@ -28,32 +28,30 @@ if __name__ == "__main__":
     keyboard.wait('s')
     print("...Agent starting in 3 seconds...")
     time.sleep(3)
-
+    start_time = time.time()
     with mss.mss() as sct:
         while True:
-            # 1. Capture and preprocess the screen
-            sct_img = sct.grab(monitor)
-            frame = np.array(sct_img)
-            frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2GRAY)
-            img = cv2.resize(frame_gray, (IMG_WIDTH, IMG_HEIGHT))
-            img = img.reshape(1, IMG_HEIGHT, IMG_WIDTH, 1) / 255.0
+            if time.time() - start_time > 0.5:
+                # 1. Capture and preprocess the screen
+                sct_img = sct.grab(monitor)
+                frame = np.array(sct_img)
+                frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGRA2GRAY)
+                img = cv2.resize(frame_gray, (IMG_WIDTH, IMG_HEIGHT))
+                img = img.reshape(1, IMG_HEIGHT, IMG_WIDTH, 1) / 255.0
 
-            # 2. Get the model's prediction
-            predictions = model.predict(img)[0]
+                # 2. Get the model's prediction
+                predictions = model.predict(img)[0]
+                
+                # 3. Choose the best action
+                action_index = np.argmax(predictions)
+                predicted_action = ACTIONS[action_index]
             
-            # 3. Choose the best action
-            action_index = np.argmax(predictions)
-            predicted_action = ACTIONS[action_index]
+                print(f"Prediction: {predicted_action} (Confidence: {predictions[action_index]:.2f})")
+                # 4. Execute the action
+                if execute:
+                    pyautogui.press(predicted_action)
+                start_time = time.time()
             
-            print(f"Prediction: {predicted_action} (Confidence: {predictions[action_index]:.2f})")
-
-            # 4. Execute the action
-            if execute:
-                pyautogui.press(predicted_action)
-            
-            # Small delay to prevent crazy fast inputs
-            time.sleep(0.5)
-
             # Check for quit signal
             if keyboard.is_pressed('q'):
                 print("...Stopping agent...")
